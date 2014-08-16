@@ -3,7 +3,6 @@
     $tcmn_model->tcmn_ttsk_id = $model->primaryKey;
 
     // render grid view
-
     $this->widget('TbGridView',
         array(
             'id' => 'tcmn-communication-grid',
@@ -81,11 +80,18 @@
                 'class' => 'TbEditableColumn',
                 'name' => 'tcmn_date',
                 'editable' => array(
-                    'type'        => 'combodate',
+                    //'type'        => 'combodate',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
-                    'viewformat'  => 'YYYY-MM-DD HH', //in this format date is displayed
-                    'template' => 'YYYY-MM-DD HH', //template for dropdowns
-                    'combodate' => array('minYear' => date('Y')-1, 'maxYear' => date('Y')+1),                     
+                    //'viewformat'  => 'YYYY-MM-DD HH', //in this format date is displayed
+                    //'template' => 'YYYY-MM-DD HH', //template for dropdowns
+                    //'combodate' => array('minYear' => date('Y')-1, 'maxYear' => date('Y')+1),                     
+                    'options' => array(
+                        'datepicker' => array(
+                            'language' => 'en',
+                            ),
+                        
+                    ),
+                    
 
                 ),
                 'htmlOptions' => array(
