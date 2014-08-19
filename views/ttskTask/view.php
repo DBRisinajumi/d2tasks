@@ -130,28 +130,27 @@ Yii::beginProfile('tcmn_ttsk_id.view.grid');
 ?>
 
 <div class="table-header">
+    <i class="icon-users"></i>        
     <?=Yii::t('D2tasksModule.model', 'Tcmn Communication')?>
     <?php    
-        
+    //idejas: http://www.yiiframework.com/wiki/145/cjuidialog-for-create-new-model/    
     $this->widget(
         'bootstrap.widgets.TbButton',
         array(
-            'buttonType' => 'ajaxButton', 
+            'id' => 'button_create_tcmn',
+            'buttonType' => 'link', 
             'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
             'size' => 'mini',
             'icon' => 'icon-plus',
-            'url' => array(
-                '//d2tasks/tcmnCommunication/ajaxCreate',
-                'field' => 'tcmn_ttsk_id',
-                'value' => $model->primaryKey,
-                'ajax' => 'tcmn-communication-grid',
-            ),
-            'ajaxOptions' => array(
-                    'success' => 'function(html) {$.fn.yiiGridView.update(\'tcmn-communication-grid\');}'
-                    ),
+//            'url' => array(
+//                '//d2tasks/tcmnCommunication/create',
+//                'tcmn_ttsk_id' => $model->primaryKey,
+//                'ajax' => 'tcmn_new_form',
+//            ),
             'htmlOptions' => array(
                 'title' => Yii::t('D2tasksModule.crud', 'Add new record'),
                 'data-toggle' => 'tooltip',
+                'onclick'=>'js:{popupTcmnCreateForm(); $("#tcmn_create_form").dialog("open");}',
             ),                 
         )
     );        
@@ -160,12 +159,51 @@ Yii::beginProfile('tcmn_ttsk_id.view.grid');
 <div class="row">
 <?php 
 
-if (empty($model->tcmnCommunications)) {
-    $tcmn_model = new TcmnCommunication;
-    $tcmn_model->tcmn_ttsk_id = $model->primaryKey;
-    $tcmn_model->save();
-    unset($tcmn_model);
-} 
+$this->beginWidget('vendor.uldisn.ace.widgets.CJuiAceDialog',array(
+    'id'=>'tcmn_create_form',
+    'title' => Yii::t('D2tasksModule.model', 'Add Communication'),
+    //'title_icon' => 'icon-warning-sign red',
+    'options'=>array(
+        'resizable' => true,
+        'width'=>'auto',
+        'height'=>'auto',        
+        'modal' => true,
+        'autoOpen'=>false,
+        //'onclose' => 'function(event, ui) {$("#ajax_form").html("");}'
+        'onclose' => 'function(event, ui) { 
+                            $.fn.yiiGridView.update(\'tcmn-communication-grid\');
+                                      }
+                      '
+    ),
+));
+?><div id="tcmn_create_form_html"></div><?php
+$this->endWidget('vendor.uldisn.ace.widgets.CJuiAceDialog');    
+
+
+
+Yii::app()->clientScript->registerScript('tcmn_create_form_ajax', 
+   '
+       function popupTcmnCreateForm(){
+        ' .
+        CHtml::ajax(array(
+                    'url'=>array(
+                            '//d2tasks/tcmnCommunication/create',
+                    ),
+                    'data'=> "js:$(this).serialize()",
+                    'type'=>'post',
+                    'data'=>array('tcmn_ttsk_id'=>$model->primaryKey),
+                    'success'=>"function(data)
+                    {
+                        $('#tcmn_create_form_html').html(data);
+                    } ",
+                    ))        
+        . '         
+       }
+
+   ',
+   CClientScript::POS_END
+      
+);
     
 $this->renderPartial('_tcmn_grid',array('model'=>$model));
 Yii::endProfile('TcmnCommunication.view.grid');

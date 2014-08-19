@@ -51,7 +51,7 @@ class TtskTask extends BaseTtskTask
         return array_merge(
             parent::relations(), array(
                 'personList'=>array(self::STAT,  'TprsPersons', 'tprs_ttsk_id', 'select' => 'GROUP_CONCAT(concat(pprs_second_name," ",pprs_first_name) SEPARATOR ", ")','join'=>' inner join pprs_person on tprs_pprs_id = pprs_id'),                
-                'minPlanDate'=>array(self::STAT,  'TcmnCommunication', 'tcmn_ttsk_id', 'select' => 'MIN(tcmn_date)','condition'=>'tcmn_tcst_id = 1'),                
+                'minPlanDate'=>array(self::STAT,  'TcmnCommunication', 'tcmn_ttsk_id', 'select' => 'MIN(tcmn_datetime)','condition'=>'tcmn_tcst_id = 1'),                
             )
         );
     }    
@@ -70,8 +70,8 @@ class TtskTask extends BaseTtskTask
         
          if(!empty($this->tcmn_date_range)){
             $criteria->join .= ' inner join tcmn_communication  on ttsk_id = tcmn_ttsk_id ';             
-            $criteria->AddCondition("tcmn_date >= '".substr($this->tcmn_date_range,0,10)."'");
-            $criteria->AddCondition("tcmn_date <= '".substr($this->tcmn_date_range,-10)."'");    
+            $criteria->AddCondition("tcmn_datetime >= '".substr($this->tcmn_date_range,0,10)."'");
+            $criteria->AddCondition("tcmn_datetime <= '".substr($this->tcmn_date_range,-10)."'");    
             
         }        
 

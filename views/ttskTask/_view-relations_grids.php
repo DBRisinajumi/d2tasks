@@ -30,13 +30,9 @@ if(!$ajax || $ajax == 'tcmt-comments-grid'){
     echo $form->hiddenField($tcmt_model,'tcmt_ttsk_id');
 ?>
 <div class="widget-box no-padding" id="ui_position_box">
-
     <div class="widget-main no-padding">
-
-        <div class="form-horizontal">    
+        <div class="form-horizontal">   
 <?php
-
-
     echo $form->textArea($tcmt_model, 'tcmt_notes', array('rows' => 6, 'cols' => 80));    
 
 ?>
@@ -94,6 +90,7 @@ Yii::app()->clientScript->registerScript('ui_comment_popup',
 ?>
 
 <div class="table-header">
+    <i class="icon-comments"></i>    
     <?=Yii::t('D2tasksModule.model', 'Tcmt Comments')?>
     <?php    
         
@@ -105,15 +102,6 @@ Yii::app()->clientScript->registerScript('ui_comment_popup',
             'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
             'size' => 'mini',
             'icon' => 'icon-plus',
-//            'url' => array(
-//                '//d2tasks/tcmtComments/ajaxCreate',
-//                'field' => 'tcmt_ttsk_id',
-//                'value' => $modelMain->primaryKey,
-//                'ajax' => 'tcmt-comments-grid',
-//            ),
-//            'ajaxOptions' => array(
-//                    'success' => 'function(html) {$.fn.yiiGridView.update(\'tcmt-comments-grid\');}'
-//                    ),
             'htmlOptions' => array(
                 'title' => Yii::t('D2tasksModule.model', 'Add Comment'),
                 'data-toggle' => 'tooltip',
@@ -181,6 +169,7 @@ if(!$ajax || $ajax == 'tprs-persons-grid'){
 ?>
 
 <div class="table-header">
+    <i class="icon-users"></i>        
     <?=Yii::t('D2tasksModule.model', 'Tprs Persons')?>
     <?php    
         

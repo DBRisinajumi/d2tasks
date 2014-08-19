@@ -8,6 +8,7 @@ class TcmnCommunicationController extends Controller
     public $defaultAction = "admin";
     public $scenario = "crud";
     public $scope = "crud";
+    public $menu_route = "d2tasks/tcmnCommunication";
 
 
 public function filters()
@@ -78,6 +79,8 @@ public function accessRules()
 
     public function actionCreate()
     {
+        $ajax = Yii::app()->request->getParam('ajax');
+        
         $model = new TcmnCommunication;
         $model->scenario = $this->scenario;
 
@@ -88,6 +91,11 @@ public function accessRules()
 
             try {
                 if ($model->save()) {
+                    if (Yii::app()->request->isAjaxRequest)
+                    {
+                        //echo 'saved';
+                        Yii::app()->end(); 
+                    }
                     if (isset($_GET['returnUrl'])) {
                         $this->redirect($_GET['returnUrl']);
                     } else {
@@ -101,7 +109,36 @@ public function accessRules()
             $model->attributes = $_GET['TcmnCommunication'];
         }
 
-        $this->render('create', array('model' => $model));
+        if(Yii::app()->request->isAjaxRequest)
+        {
+//            header('Content-type: application/json');
+//            echo CJSON::encode(array(
+//                'status'=>'view', 
+//                'html'=>$this->renderPartial('_form', array('model'=>$model), true)));
+//            Yii::app()->end(); 
+            $ttsk_id = Yii::app()->request->getPost('tcmn_ttsk_id');
+            if(!empty($ttsk_id)){
+                $model->tcmn_ttsk_id = Yii::app()->request->getPost('tcmn_ttsk_id');            
+            }
+            
+            $ttsk_model = TtskTask::model()->findByPk($model->tcmn_ttsk_id);
+            
+            $cs = Yii::app()->clientScript;
+            $cs->reset(); 
+            
+            $cs->scriptMap = array(
+                'jquery.js' => false, // prevent produce jquery.js in additional javascript data
+                'jquery.min.js' => false,
+            );              
+            echo $this->renderPartial('_form', array(
+                'model' => $model,
+                'ttsk_model' => $ttsk_model,
+                ),
+                true,
+                true);  
+        }else{
+            $this->render('_form', array('model' => $model));
+        }
     }
 
     public function actionUpdate($tcmn_id)
@@ -186,7 +223,17 @@ public function accessRules()
             $model->attributes = $_GET['TcmnCommunication'];
         }
 
-        $this->render('admin', array('model' => $model));
+        if (isset($_GET['ajax'])) {
+            $this->renderPartial('admin', array(
+                'model' => $model,
+                'ajax' => true,
+                ));            
+        }else{
+            $this->render('admin', array(
+                'model' => $model,
+                'ajax' => false,
+                ));            
+        }
     }
 
     public function loadModel($id)

@@ -69,7 +69,7 @@
                 'editable' => array(
                     'type' => 'select',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
-                    'source' => CHtml::listData(TcstCommunicationStatus::model()->findAll(array('limit' => 1000)), 'tcst_id', 'itemLabel'),
+                    'source' => CHtml::listData(TcstCommunicationStatus::model()->findAll(), 'tcst_id', 'itemLabel'),
                     'htmlOptions' => array(
                         'class' => 'span3'
                     ),                    
@@ -77,18 +77,15 @@
                 )
             ),
             array(
-                'class' => 'TbEditableColumn',
-                'name' => 'tcmn_date',
+                'class' => 'editable.EditableColumn',
+                'name' => 'tcmn_datetime',
                 'editable' => array(
-                    //'type'        => 'combodate',
+                    'type'        => 'datetime',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
-                    //'viewformat'  => 'YYYY-MM-DD HH', //in this format date is displayed
-                    //'template' => 'YYYY-MM-DD HH', //template for dropdowns
-                    //'combodate' => array('minYear' => date('Y')-1, 'maxYear' => date('Y')+1),                     
                     'options' => array(
-                        'datepicker' => array(
-                            'language' => 'en',
-                            ),
+//                        'datepicker' => array(
+//                            'language' => 'en',
+//                            ),
                         
                     ),
                     

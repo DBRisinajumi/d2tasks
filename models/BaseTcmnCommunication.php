@@ -11,7 +11,7 @@
  * @property string $tcmn_task
  * @property string $tcmn_result
  * @property integer $tcmn_tcst_id
- * @property string $tcmn_date
+ * @property string $tcmn_datetime
  * @property integer $tcmn_tmed_id
  *
  * Relations of table "tcmn_communication" available as properties of the model:
@@ -39,12 +39,12 @@ abstract class BaseTcmnCommunication extends CActiveRecord
     {
         return array_merge(
             parent::rules(), array(
-                array('tcmn_ttsk_id', 'required'),
-                array('tcmn_pprs_id, tcmn_client_pprs_id, tcmn_task, tcmn_result, tcmn_tcst_id, tcmn_date, tcmn_tmed_id', 'default', 'setOnEmpty' => true, 'value' => null),
+                array('tcmn_ttsk_id, tcmn_pprs_id, tcmn_task, tcmn_tcst_id, tcmn_datetime, tcmn_tmed_id', 'required'),
+                array('tcmn_client_pprs_id, tcmn_result', 'default', 'setOnEmpty' => true, 'value' => null),
                 array('tcmn_pprs_id, tcmn_client_pprs_id, tcmn_tcst_id, tcmn_tmed_id', 'numerical', 'integerOnly' => true),
                 array('tcmn_ttsk_id', 'length', 'max' => 10),
-                array('tcmn_task, tcmn_result, tcmn_date', 'safe'),
-                array('tcmn_id, tcmn_ttsk_id, tcmn_pprs_id, tcmn_client_pprs_id, tcmn_task, tcmn_result, tcmn_tcst_id, tcmn_date, tcmn_tmed_id', 'safe', 'on' => 'search'),
+                array('tcmn_result', 'safe'),
+                array('tcmn_id, tcmn_ttsk_id, tcmn_pprs_id, tcmn_client_pprs_id, tcmn_task, tcmn_result, tcmn_tcst_id, tcmn_datetime, tcmn_tmed_id', 'safe', 'on' => 'search'),
             )
         );
     }
@@ -89,7 +89,7 @@ abstract class BaseTcmnCommunication extends CActiveRecord
             'tcmn_task' => Yii::t('D2tasksModule.model', 'Tcmn Task'),
             'tcmn_result' => Yii::t('D2tasksModule.model', 'Tcmn Result'),
             'tcmn_tcst_id' => Yii::t('D2tasksModule.model', 'Tcmn Tcst'),
-            'tcmn_date' => Yii::t('D2tasksModule.model', 'Tcmn Date'),
+            'tcmn_datetime' => Yii::t('D2tasksModule.model', 'Tcmn Datetime'),
             'tcmn_tmed_id' => Yii::t('D2tasksModule.model', 'Tcmn Tmed'),
         );
     }
@@ -107,7 +107,7 @@ abstract class BaseTcmnCommunication extends CActiveRecord
         $criteria->compare('t.tcmn_task', $this->tcmn_task, true);
         $criteria->compare('t.tcmn_result', $this->tcmn_result, true);
         $criteria->compare('t.tcmn_tcst_id', $this->tcmn_tcst_id);
-        $criteria->compare('t.tcmn_date', $this->tcmn_date, true);
+        $criteria->compare('t.tcmn_datetime', $this->tcmn_datetime, true);
         $criteria->compare('t.tcmn_tmed_id', $this->tcmn_tmed_id);
 
 

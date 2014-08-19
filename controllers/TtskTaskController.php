@@ -192,7 +192,17 @@ public function accessRules()
             $model->attributes = $_GET['TtskTask'];
         }
 
-        $this->render('admin', array('model' => $model));
+        if (isset($_GET['ajax'])) {
+            $this->renderPartial('admin', array(
+                'model' => $model,
+                'ajax' => true,
+                ));            
+        }else{
+            $this->render('admin', array(
+                'model' => $model,
+                'ajax' => false,
+                ));            
+        }
     }
 
     public function loadModel($id)
