@@ -23,29 +23,29 @@ public function accessRules()
      return array(
         array(
             'allow',
-            'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete','ajaxCreate'),
+            'actions' => array('create', 'editableSaver'),
             'roles' => array('D2tasks.TcmnCommunication.*'),
         ),
         array(
             'allow',
-            'actions' => array('create','ajaxCreate'),
+            'actions' => array('create'),
             'roles' => array('D2tasks.TcmnCommunication.Create'),
         ),
+//        array(
+//            'allow',
+//            'actions' => array('view', 'admin'), // let the user view the grid
+//            'roles' => array('D2tasks.TcmnCommunication.View'),
+//        ),
         array(
             'allow',
-            'actions' => array('view', 'admin'), // let the user view the grid
-            'roles' => array('D2tasks.TcmnCommunication.View'),
-        ),
-        array(
-            'allow',
-            'actions' => array('update', 'editableSaver'),
+            'actions' => array('editableSaver'),
             'roles' => array('D2tasks.TcmnCommunication.Update'),
         ),
-        array(
-            'allow',
-            'actions' => array('delete'),
-            'roles' => array('D2tasks.TcmnCommunication.Delete'),
-        ),
+//        array(
+//            'allow',
+//            'actions' => array('delete'),
+//            'roles' => array('D2tasks.TcmnCommunication.Delete'),
+//        ),
         array(
             'deny',
             'users' => array('*'),

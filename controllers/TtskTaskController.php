@@ -23,12 +23,12 @@ public function accessRules()
      return array(
         array(
             'allow',
-            'actions' => array('create', 'admin', 'view', 'update', 'editableSaver', 'delete','ajaxCreate'),
+            'actions' => array('create', 'admin', 'view',  'editableSaver', ),
             'roles' => array('D2tasks.TtskTask.*'),
         ),
         array(
             'allow',
-            'actions' => array('create','ajaxCreate'),
+            'actions' => array('create'),
             'roles' => array('D2tasks.TtskTask.Create'),
         ),
         array(
@@ -38,13 +38,8 @@ public function accessRules()
         ),
         array(
             'allow',
-            'actions' => array('update', 'editableSaver'),
+            'actions' => array('editableSaver'),
             'roles' => array('D2tasks.TtskTask.Update'),
-        ),
-        array(
-            'allow',
-            'actions' => array('delete'),
-            'roles' => array('D2tasks.TtskTask.Delete'),
         ),
         array(
             'deny',
