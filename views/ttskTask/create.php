@@ -1,5 +1,5 @@
 <?php
-$this->setPageTitle(Yii::t('D2tasksModule.model', 'Create New Task'));
+$this->setPageTitle(Yii::t('D2tasksModule.model', 'Create New Project'));
 
 $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
     #"label"=>Yii::t("D2tasksModule.crud","Cancel"),
@@ -21,7 +21,7 @@ $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
         <div class="btn-group">
             <h1>
                 <i class="icon-tasks"></i>
-                <?php echo Yii::t('D2tasksModule.model','Create Ttsk Task');?>            </h1>
+                <?php echo Yii::t('D2tasksModule.model','Create New Project');?>            </h1>
         </div>
     </div>
 </div>

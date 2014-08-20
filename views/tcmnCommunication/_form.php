@@ -189,7 +189,7 @@ echo $form->error($model, 'tcmn_tmed_id')
          */
         $ajax_submit_url = $this->createUrl('//d2tasks/tcmnCommunication/create');
         $this->widget("bootstrap.widgets.TbButton", array(
-            "label" => Yii::t("D2tasksModule.crud_static", "Save"),
+            "label" => Yii::t("D2tasksModule.crud", "Save"),
             "icon" => "icon-thumbs-up icon-white",
             "id" => "ajax_form_submit_buttn",
             "size" => "small",

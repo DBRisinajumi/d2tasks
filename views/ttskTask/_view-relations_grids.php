@@ -169,7 +169,7 @@ if(!$ajax || $ajax == 'tprs-persons-grid'){
 ?>
 
 <div class="table-header">
-    <i class="icon-users"></i>        
+    <i class="icon-user"></i>        
     <?=Yii::t('D2tasksModule.model', 'Tprs Persons')?>
     <?php    
         

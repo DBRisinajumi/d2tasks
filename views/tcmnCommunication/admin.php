@@ -1,6 +1,6 @@
 <?php
 if(!$ajax){
-$this->setPageTitle(Yii::t('D2tasksModule.model', 'Communications'));
+$this->setPageTitle(Yii::t('D2tasksModule.model', 'Tasks'));
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {
     filter_TcmnCommunication_tcmn_date_range_init();
@@ -24,8 +24,8 @@ function reinstallDatePicker(id, data) {
 </div>
         <div class="btn-group">
             <h1>
-                <i class=""></i>
-                <?php echo Yii::t('D2tasksModule.model', 'Communications');?>
+                 <i class="icon-ticket"></i>     
+                <?php echo Yii::t('D2tasksModule.model', 'Tasks');?>
             </h1>
         </div>
     </div>
@@ -53,7 +53,7 @@ $this->widget('TbGridView',
                 'filter' => CHtml::listData(CcmpCompany::model()->findAll(array('order'=>'ccmp_name')), 'ccmp_id', 'itemLabel'),
             ),
             array(
-                'header' => Yii::t('D2tasksModule.model', 'Task'),
+                'header' => Yii::t('D2tasksModule.model', 'Project'),
                 'name' => 'task_name',
                 'value' => '$data->tcmnTtsk->ttsk_name',
                 //'filter'=> CHtml::activeTextField($model, 'varFullname'),

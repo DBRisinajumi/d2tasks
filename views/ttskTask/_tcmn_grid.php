@@ -110,20 +110,20 @@
                 )
             ),
 
-                array(
-                    'class' => 'TbButtonColumn',
-                    'buttons' => array(
-                        'view' => array('visible' => 'FALSE'),
-                        'update' => array('visible' => 'FALSE'),
-                        'delete' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTask.DeletetcmnCommunications")'),
-                    ),
-                    'deleteButtonUrl' => 'Yii::app()->controller->createUrl("/d2tasks/tcmnCommunication/delete", array("tcmn_id" => $data->tcmn_id))',
-                    'deleteConfirmation'=>Yii::t('D2tasksModule.crud','Do you want to delete this item?'),   
-                    'deleteButtonOptions'=>array('data-toggle'=>'tooltip'),                    
-                    'htmlOptions' => array(
-                        'class' => 'span1'
-                    ),                                       
-                ),
+//                array(
+//                    'class' => 'TbButtonColumn',
+//                    'buttons' => array(
+//                        'view' => array('visible' => 'FALSE'),
+//                        'update' => array('visible' => 'FALSE'),
+//                        'delete' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTask.DeletetcmnCommunications")'),
+//                    ),
+//                    'deleteButtonUrl' => 'Yii::app()->controller->createUrl("/d2tasks/tcmnCommunication/delete", array("tcmn_id" => $data->tcmn_id))',
+//                    'deleteConfirmation'=>Yii::t('D2tasksModule.crud','Do you want to delete this item?'),   
+//                    'deleteButtonOptions'=>array('data-toggle'=>'tooltip'),                    
+//                    'htmlOptions' => array(
+//                        'class' => 'span1'
+//                    ),                                       
+//                ),
             )
         )
     );

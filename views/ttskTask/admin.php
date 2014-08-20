@@ -1,6 +1,6 @@
 <?php
 if (!$ajax) {
-    $this->setPageTitle(Yii::t('D2tasksModule.model', 'Tasks list'));
+    $this->setPageTitle(Yii::t('D2tasksModule.model', 'Projects list'));
     Yii::app()->clientScript->registerScript('re-install-date-picker', "
         function reinstallDatePicker(id, data) {
             filter_TtskTask_tcmn_date_range_init();
@@ -25,7 +25,7 @@ if (!$ajax) {
             <div class="btn-group">
                 <h1>
                     <i class="icon-tasks"></i>
-                    <?php echo Yii::t('D2tasksModule.model', 'Ttsk Tasks'); ?>            </h1>
+                    <?php echo Yii::t('D2tasksModule.model', 'Projects'); ?>            </h1>
             </div>
         </div>
     </div>

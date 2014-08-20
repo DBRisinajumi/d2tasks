@@ -1,5 +1,5 @@
 <?php
-$this->setPageTitle(Yii::t('D2tasksModule.model', 'Task details: ') . $model->getItemLabel());
+$this->setPageTitle(Yii::t('D2tasksModule.model', 'Project details') . ': ' . $model->getItemLabel());
 $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
     #"label"=>Yii::t("D2tasksModule.crud","Cancel"),
     "icon" => "chevron-left",
@@ -20,7 +20,7 @@ $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
         <div class="btn-group">
             <h1>
                 <i class="icon-tasks"></i>
-                <?php echo Yii::t('D2tasksModule.model', 'Task details'); ?>
+                <?php echo Yii::t('D2tasksModule.model', 'Project details'); ?>
             </h1>
         </div>
         <div class="btn-group">
@@ -130,8 +130,8 @@ Yii::beginProfile('tcmn_ttsk_id.view.grid');
 ?>
 
 <div class="table-header">
-    <i class="icon-users"></i>        
-    <?=Yii::t('D2tasksModule.model', 'Tcmn Communication')?>
+    <i class="icon-ticket"></i>        
+    <?=Yii::t('D2tasksModule.model', 'Tasks')?>
     <?php    
     //idejas: http://www.yiiframework.com/wiki/145/cjuidialog-for-create-new-model/    
     $this->widget(
@@ -142,11 +142,6 @@ Yii::beginProfile('tcmn_ttsk_id.view.grid');
             'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
             'size' => 'mini',
             'icon' => 'icon-plus',
-//            'url' => array(
-//                '//d2tasks/tcmnCommunication/create',
-//                'tcmn_ttsk_id' => $model->primaryKey,
-//                'ajax' => 'tcmn_new_form',
-//            ),
             'htmlOptions' => array(
                 'title' => Yii::t('D2tasksModule.crud', 'Add new record'),
                 'data-toggle' => 'tooltip',
@@ -161,7 +156,7 @@ Yii::beginProfile('tcmn_ttsk_id.view.grid');
 
 $this->beginWidget('vendor.uldisn.ace.widgets.CJuiAceDialog',array(
     'id'=>'tcmn_create_form',
-    'title' => Yii::t('D2tasksModule.model', 'Add Communication'),
+    'title' => Yii::t('D2tasksModule.model', 'Add Task'),
     //'title_icon' => 'icon-warning-sign red',
     'options'=>array(
         'resizable' => true,
@@ -169,7 +164,6 @@ $this->beginWidget('vendor.uldisn.ace.widgets.CJuiAceDialog',array(
         'height'=>'auto',        
         'modal' => true,
         'autoOpen'=>false,
-        //'onclose' => 'function(event, ui) {$("#ajax_form").html("");}'
         'onclose' => 'function(event, ui) { 
                             $.fn.yiiGridView.update(\'tcmn-communication-grid\');
                                       }
