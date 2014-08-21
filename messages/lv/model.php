@@ -72,7 +72,7 @@ return array (
   'Tcsh Datetime' => 'Datums',
   'Tcsh Pprs' => 'Menedžeris',
   'Tcst Name' => 'Nosaukums',
-  'Tmed' => 'Mēdijs',
+  'Tmed' => 'Saziņas veids',
   'Tmed Name' => 'Nosaukums',
   'Tprs Persons' => 'Menedžeri',
   'Tprs Pprs' => 'Menedžeris',
