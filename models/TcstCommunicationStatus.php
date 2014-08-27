@@ -23,7 +23,12 @@ class TcstCommunicationStatus extends BaseTcstCommunicationStatus
         return parent::getItemLabel();
     }
 
-    public function behaviors()
+    public function getTcst_css_class()
+    {
+        return $this->tcst_icon;
+    }
+
+        public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
