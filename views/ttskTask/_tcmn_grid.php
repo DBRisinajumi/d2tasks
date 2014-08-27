@@ -8,6 +8,7 @@
             'id' => 'tcmn-communication-grid',
             'dataProvider' => $tcmn_model->search(),
             'template' => '{summary}{items}',
+             'rowCssClassExpression' => '$data->tcmnTcst->tcst_css_class',
             'summaryText' => '&nbsp;',
             'htmlOptions' => array(
                 'class' => 'rel-grid-view'
@@ -22,7 +23,7 @@
                     'source' => CHtml::listData(PprsPerson::model()->getSysCompanyPersons(), 'pprs_id', 'itemLabel'),
                     'placement' => 'right',
                     'htmlOptions' => array(
-                        'class' => 'span6'
+             //           'class' => 'span6'
                     ),
                 )
             ),
@@ -34,7 +35,7 @@
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'source' => CHtml::listData(PprsPerson::model()->getCompanyPersons($model->ttsk_ccmp_id), 'pprs_id', 'itemLabel'),
                     'htmlOptions' => array(
-                        'class' => 'span6'
+                //        'class' => 'span6'
                     ),                    
                     //'placement' => 'right',
                 )
@@ -46,7 +47,7 @@
                     'type' => 'textarea',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'htmlOptions' => array(
-                        'class' => 'span10'
+                //        'class' => 'span10'
                     ),                                
                     //'placement' => 'right',
                 )
@@ -58,7 +59,7 @@
                     'type' => 'textarea',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'htmlOptions' => array(
-                        'class' => 'span10'
+                 //       'class' => 'span10'
                     ),                                       
                     //'placement' => 'right',
                 )
@@ -71,7 +72,7 @@
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'source' => CHtml::listData(TcstCommunicationStatus::model()->findAll(), 'tcst_id', 'itemLabel'),
                     'htmlOptions' => array(
-                        'class' => 'span3'
+                 //       'class' => 'span3'
                     ),                    
                     //'placement' => 'right',
                 )
@@ -92,19 +93,20 @@
 
                 ),
                 'htmlOptions' => array(
-                        'class' => 'span5'
+              //          'class' => 'span5'
                 ),                    
                 
             ),
             array(
                 'class' => 'editable.EditableColumn',
                 'name' => 'tcmn_tmed_id',
+                'type' => 'raw',
                 'editable' => array(
                     'type' => 'select',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'source' => CHtml::listData(TmedMedia::model()->findAll(array('limit' => 1000)), 'tmed_id', 'itemLabel'),
                     'htmlOptions' => array(
-                        'class' => 'span3'
+               //         'class' => 'span3'
                     ),                    
                     //'placement' => 'right',
                 )
