@@ -185,7 +185,10 @@ Yii::app()->clientScript->registerScript('tcmn_create_form_ajax',
                     ),
                     'data'=> "js:$(this).serialize()",
                     'type'=>'post',
-                    'data'=>array('tcmn_ttsk_id'=>$model->primaryKey),
+                    'data'=>array(
+                        'ajax' => 'tcmn-communication-grid',
+                        'tcmn_ttsk_id'=>$model->primaryKey,
+                        ),
                     'success'=>"function(data)
                     {
                         $('#tcmn_create_form_html').html(data);

@@ -13,17 +13,29 @@
     ));
 
     echo $form->hiddenField($model, 'tcmn_ttsk_id');
+    echo CHtml::hiddenField('ajax', 'submit_form');
     echo $form->errorSummary($model);
+    
+    //set first project manager as task manager
+    $managers = $ttsk_model->tprsPersons;
+    if(!empty($managers)){
+        foreach($managers as $manager){
+            $model->tcmn_pprs_id = $manager->tprs_pprs_id;
+            break;
+        }
+    }
     ?>
 
+    
+    
 
-
-    <?php ?>
+        
     <div class="control-group">
         <div class='control-label'>
-            <?php ?>
+
         </div>
         <div class='controls'>
+            
             <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
                   title='<?php echo (($t = Yii::t('D2tasksModule.model', 'tooltip.tcmn_id')) != 'tooltip.tcmn_id') ? $t : '' ?>'>
                       <?php
@@ -32,9 +44,16 @@
                       ?>                            </span>
         </div>
     </div>
-    <?php ?>
-
-    <?php ?>
+    <div class="control-group">
+            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                  title='<?php echo (($t = Yii::t('D2tasksModule.model', 'tooltip.tcmn_task')) != 'tooltip.tcmn_task') ? $t : '' ?>'>
+<?php
+echo $form->labelEx($model, 'tcmn_task');
+echo $form->textArea($model, 'tcmn_task', array('rows' => 3, 'cols' => 50,'class' => 'span6'));
+echo $form->error($model, 'tcmn_task')
+?>                            </span>        
+        
+    </div>    
     <div class="control-group">
         <div class='control-label'>
             <?php echo $form->labelEx($model, 'tcmn_pprs_id') ?>
@@ -55,9 +74,7 @@
                       ?>                            </span>
         </div>
     </div>
-    <?php ?>
 
-    <?php ?>
     <div class="control-group">
         <div class='control-label'>
             <?php echo $form->labelEx($model, 'tcmn_client_pprs_id') ?>
@@ -76,22 +93,6 @@
                               );
                       echo $form->error($model, 'tcmn_client_pprs_id')
                       ?>                            </span>
-        </div>
-    </div>
-<?php ?>
-
-    <?php ?>
-    <div class="control-group">
-        <div class='control-label'>
-<?php echo $form->labelEx($model, 'tcmn_task') ?>
-        </div>
-        <div class='controls'>
-            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
-                  title='<?php echo (($t = Yii::t('D2tasksModule.model', 'tooltip.tcmn_task')) != 'tooltip.tcmn_task') ? $t : '' ?>'>
-<?php
-echo $form->textArea($model, 'tcmn_task', array('rows' => 6, 'cols' => 50,'class' => 'span3'));
-echo $form->error($model, 'tcmn_task')
-?>                            </span>
         </div>
     </div>
 
@@ -115,9 +116,7 @@ echo $form->error($model, 'tcmn_task')
             </span>
         </div>
     </div>
-                <?php ?>
 
-    <?php ?>
     <div class="control-group">
         <div class='control-label'>
     <?php echo $form->labelEx($model, 'tcmn_datetime') ?>
@@ -146,9 +145,7 @@ echo $form->error($model, 'tcmn_task')
 ?>                            </span>
         </div>
     </div>
-                <?php ?>
 
-    <?php ?>
     <div class="control-group">
         <div class='control-label'>
     <?php echo $form->labelEx($model, 'tcmn_tmed_id') ?>
@@ -174,7 +171,6 @@ echo $form->error($model, 'tcmn_tmed_id')
 ?>                            </span>
         </div>
     </div>
-                      <?php ?>
 
     <div class="alert alert-warning">
 

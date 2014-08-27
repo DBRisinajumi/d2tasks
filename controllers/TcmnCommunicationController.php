@@ -23,29 +23,9 @@ public function accessRules()
      return array(
         array(
             'allow',
-            'actions' => array('create', 'editableSaver'),
-            'roles' => array('D2tasks.TcmnCommunication.*'),
+            'actions' => array('create','editableSaver'),
+            'roles' => array('D2tasks.TcmnCommunication.edit'),
         ),
-        array(
-            'allow',
-            'actions' => array('create'),
-            'roles' => array('D2tasks.TcmnCommunication.Create'),
-        ),
-//        array(
-//            'allow',
-//            'actions' => array('view', 'admin'), // let the user view the grid
-//            'roles' => array('D2tasks.TcmnCommunication.View'),
-//        ),
-        array(
-            'allow',
-            'actions' => array('editableSaver'),
-            'roles' => array('D2tasks.TcmnCommunication.Update'),
-        ),
-//        array(
-//            'allow',
-//            'actions' => array('delete'),
-//            'roles' => array('D2tasks.TcmnCommunication.Delete'),
-//        ),
         array(
             'deny',
             'users' => array('*'),
@@ -91,7 +71,7 @@ public function accessRules()
 
             try {
                 if ($model->save()) {
-                    if (Yii::app()->request->isAjaxRequest)
+                    if ($ajax)
                     {
                         //echo 'saved';
                         Yii::app()->end(); 
@@ -109,13 +89,8 @@ public function accessRules()
             $model->attributes = $_GET['TcmnCommunication'];
         }
 
-        if(Yii::app()->request->isAjaxRequest)
+        if($ajax)
         {
-//            header('Content-type: application/json');
-//            echo CJSON::encode(array(
-//                'status'=>'view', 
-//                'html'=>$this->renderPartial('_form', array('model'=>$model), true)));
-//            Yii::app()->end(); 
             $ttsk_id = Yii::app()->request->getPost('tcmn_ttsk_id');
             if(!empty($ttsk_id)){
                 $model->tcmn_ttsk_id = Yii::app()->request->getPost('tcmn_ttsk_id');            

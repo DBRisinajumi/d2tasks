@@ -91,7 +91,7 @@ $this->widget('TbGridView', array(
         array(
             'class' => 'TbButtonColumn',
             'buttons' => array(
-                'view' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTask.View")'),
+                'view' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTaskEdit")'),
                 'update' => array('visible' => 'FALSE'),
                 //'delete' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTask.Delete")'),
                 'delete' => array('visible' => 'FALSE'),
