@@ -39,6 +39,7 @@ $this->widget('TbGridView',
         'dataProvider' => $model->search(),
         'filter' => $model,
         #'responsiveTable' => true,
+        'rowCssClassExpression' => '$data->tcmnTcst->tcst_css_class',
         'template' => '{summary}{pager}{items}{pager}',
         'pager' => array(
             'class' => 'TbPager',
