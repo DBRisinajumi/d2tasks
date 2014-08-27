@@ -28,7 +28,7 @@ class TcstCommunicationStatus extends BaseTcstCommunicationStatus
         return $this->tcst_icon;
     }
 
-        public function behaviors()
+    public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
