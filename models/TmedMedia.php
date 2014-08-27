@@ -51,5 +51,10 @@ class TmedMedia extends BaseTmedMedia
             'criteria' => $this->searchCriteria($criteria),
         ));
     }
+    
+    public function getIconName()
+    {
+        return '<i class="'.$this->tmed_icon.'"></i> '.$this->tmed_name;
+    }
 
 }
