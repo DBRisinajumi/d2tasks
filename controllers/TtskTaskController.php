@@ -81,7 +81,7 @@ public function accessRules()
     {
         $model = new TtskTask;
         $model->scenario = $this->scenario;
-
+        
         $this->performAjaxValidation($model, 'ttsk-task-form');
 
         if (isset($_POST['TtskTask'])) {
@@ -89,6 +89,18 @@ public function accessRules()
 
             try {
                 if ($model->save()) {
+                    
+                     // add managers
+                     if (isset($_POST['managers']))   {
+            
+                     foreach($_POST['managers'] as $manager) {
+                
+                          $modelPerson = new TprsPersons;
+                          $modelPerson->tprs_ttsk_id = $model->ttsk_id;
+                          $modelPerson->tprs_pprs_id = $manager;
+                          $modelPerson->save();
+                          }
+                     }
                     if (isset($_GET['returnUrl'])) {
                         $this->redirect($_GET['returnUrl']);
                     } else {
@@ -101,6 +113,9 @@ public function accessRules()
         } elseif (isset($_GET['TtskTask'])) {
             $model->attributes = $_GET['TtskTask'];
         }
+        
+       
+        
 
         $this->render('create', array('model' => $model));
     }
