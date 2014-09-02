@@ -67,6 +67,29 @@
                         </div>
                     </div>
                     <?php  ?>
+                
+                 <?php  ?>
+                    <div class="control-group">
+                        <div class='control-label'>
+                                <?php echo Chtml::label('Managers', 'managers'); ?>
+                        </div>
+                        <div class='controls'>
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('D2tasksModule.model', 'tooltip.ttsk_name')) != 'tooltip.ttsk_name')?$t:'' ?>'>
+                                 <?php
+                                 
+                            $person = PprsPerson::model()->getSysCompanyPersons();     
+                            
+                            echo Chtml::listBox('managers', Yii::app()->getModule('user')->user()->profile->person_id , 
+                                                CHtml::listData(PprsPerson::model()->findAll(array('limit' => 1000,'order'=>'pprs_second_name')), 'pprs_id', 'itemLabel'),
+                                                   array('style' => 'width:300px;', 'size'=> 30, 'multiple'=>'multiple')
+                                                    );
+                        
+                            ?>                                        </span>
+                        </div>
+                    </div>
+                    <?php  ?>
+                
                                     
                     <?php  ?>
                     <div class="control-group">
