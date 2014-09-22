@@ -25,7 +25,7 @@ class TtskTask extends BaseTtskTask
 
     public function getItemLabel()
     {
-        return parent::getItemLabel();
+        return (string) $this->ttsk_name;
     }
 
     public function behaviors()
