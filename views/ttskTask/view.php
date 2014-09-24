@@ -48,7 +48,7 @@ $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
 
 <?php
 $this->widget(
-        'TbDetailView', array(
+        'TbAceDetailView', array(
     'data' => $model,
     'attributes' => array(
         array(
@@ -63,7 +63,10 @@ $this->widget(
                 'attribute' => 'ttsk_ccmp_id',
                     //'placement' => 'right',
                     ), true
-            )
+            ),
+            'value_id' => $model->ttsk_ccmp_id,
+            'external_link' => array('/d2company/ccmpCompany/updateExtended','ccmp_id'=>$model->ttsk_ccmp_id),
+            'external_title' => Yii::t("D2tasksModule.model",'Show Company Data'),                    
         ),
         array(
             'name' => 'ttsk_name',

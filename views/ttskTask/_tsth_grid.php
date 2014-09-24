@@ -23,7 +23,7 @@ $this->widget('TbGridView', array(
         ),
         array(
             'name' => 'tsth_pprs_id',
-            'value' => '(empty($data->tsth_pprs_id)) ? "" : $data->tsthPprs->itemLabel',
+            'value' => '!empty($data->tsth_pprs_id)?$data->tsthPprs->itemLabel:""',            
         ),
     )
         )
