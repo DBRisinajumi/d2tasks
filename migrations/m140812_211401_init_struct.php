@@ -54,24 +54,24 @@ CREATE TABLE `ttsk_task` (
 CREATE TABLE `tcmn_communication` (
   `tcmn_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tcmn_ttsk_id` int(10) unsigned NOT NULL COMMENT 'task',
-  `tcmn_pprs_id` smallint(5) unsigned DEFAULT NULL COMMENT 'person',
+  `tcmn_pprs_id` smallint(5) unsigned NOT NULL COMMENT 'person',
   `tcmn_client_pprs_id` smallint(6) unsigned DEFAULT NULL COMMENT 'client person',
-  `tcmn_task` text,
+  `tcmn_task` text NOT NULL,
   `tcmn_result` text,
-  `tcmn_tcst_id` tinyint(3) unsigned DEFAULT NULL COMMENT 'status',
-  `tcmn_date` date DEFAULT NULL,
-  `tcmn_tmed_id` tinyint(4) unsigned DEFAULT NULL COMMENT 'medijs',
+  `tcmn_tcst_id` tinyint(3) unsigned NOT NULL COMMENT 'status',
+  `tcmn_datetime` datetime NOT NULL,
+  `tcmn_tmed_id` tinyint(4) unsigned NOT NULL COMMENT 'medijs',
   PRIMARY KEY (`tcmn_id`),
   KEY `tcmn_ttsk_id` (`tcmn_ttsk_id`),
   KEY `tcmn_pprs_id` (`tcmn_pprs_id`),
   KEY `tcmn_client_pprs_id` (`tcmn_client_pprs_id`),
   KEY `tcmn_tcst_id` (`tcmn_tcst_id`),
   KEY `tcmn_tmed_id` (`tcmn_tmed_id`),
-  CONSTRAINT `tcmn_communication_ibfk_5` FOREIGN KEY (`tcmn_tmed_id`) REFERENCES `tmed_media` (`tmed_id`),
   CONSTRAINT `tcmn_communication_ibfk_1` FOREIGN KEY (`tcmn_ttsk_id`) REFERENCES `ttsk_task` (`ttsk_id`),
   CONSTRAINT `tcmn_communication_ibfk_2` FOREIGN KEY (`tcmn_pprs_id`) REFERENCES `pprs_person` (`pprs_id`),
   CONSTRAINT `tcmn_communication_ibfk_3` FOREIGN KEY (`tcmn_client_pprs_id`) REFERENCES `pprs_person` (`pprs_id`),
-  CONSTRAINT `tcmn_communication_ibfk_4` FOREIGN KEY (`tcmn_tcst_id`) REFERENCES `tcst_communication_status` (`tcst_id`)
+  CONSTRAINT `tcmn_communication_ibfk_4` FOREIGN KEY (`tcmn_tcst_id`) REFERENCES `tcst_communication_status` (`tcst_id`),
+  CONSTRAINT `tcmn_communication_ibfk_5` FOREIGN KEY (`tcmn_tmed_id`) REFERENCES `tmed_media` (`tmed_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tcmt_comments` */
