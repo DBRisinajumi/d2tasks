@@ -61,8 +61,8 @@ public function accessRules()
     {
         $ajax = Yii::app()->request->getParam('ajax');
         
-        $model = new TcmnCommunication;
-        $model->scenario = $this->scenario;
+        $model = new TcmnCommunication('form_scenario');
+        //$model->scenario = $this->scenario;
 
         $this->performAjaxValidation($model, 'tcmn-communication-form');
 
@@ -152,6 +152,7 @@ public function accessRules()
     public function actionAjaxCreate($field, $value) 
     {
         $model = new TcmnCommunication;
+        $model->scenario = 'form_scenario';    
         $model->$field = $value;
         try {
             if ($model->save()) {
@@ -187,17 +188,18 @@ public function accessRules()
 
     public function actionAdmin()
     {
-        $model = new TcmnCommunication('search');
+        $model = new TcmnCommunication();
+
         $scopes = $model->scopes();
         if (isset($scopes[$this->scope])) {
             $model->{$this->scope}();
         }
         $model->unsetAttributes();
-
+        
         if (isset($_GET['TcmnCommunication'])) {
             $model->attributes = $_GET['TcmnCommunication'];
         }
-
+            
         if (isset($_GET['ajax'])) {
             $this->renderPartial('admin', array(
                 'model' => $model,

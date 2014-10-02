@@ -40,6 +40,7 @@ class TcmnCommunication extends BaseTcmnCommunication
             parent::rules(),
             array(
                 array('task_name,tcmn_date_range', 'safe', 'on'=>'search'),
+                array('tcmn_ttsk_id, tcmn_pprs_id, tcmn_task, tcmn_tcst_id, tcmn_datetime, tcmn_tmed_id', 'required', 'on'=>'form_scenario'),
             )
         );
     }

@@ -39,8 +39,8 @@ abstract class BaseTcmnCommunication extends CActiveRecord
     {
         return array_merge(
             parent::rules(), array(
-                array('tcmn_ttsk_id, tcmn_pprs_id, tcmn_task, tcmn_tcst_id, tcmn_datetime, tcmn_tmed_id', 'required'),
-                array('tcmn_client_pprs_id, tcmn_result', 'default', 'setOnEmpty' => true, 'value' => null),
+                array('tcmn_ttsk_id, tcmn_task, tcmn_tcst_id, tcmn_datetime', 'required'),
+                array('tcmn_pprs_id, tcmn_client_pprs_id, tcmn_result, tcmn_tmed_id', 'default', 'setOnEmpty' => true, 'value' => null),
                 array('tcmn_pprs_id, tcmn_client_pprs_id, tcmn_tcst_id, tcmn_tmed_id', 'numerical', 'integerOnly' => true),
                 array('tcmn_ttsk_id', 'length', 'max' => 10),
                 array('tcmn_result', 'safe'),
