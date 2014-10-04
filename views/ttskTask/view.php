@@ -25,6 +25,27 @@ $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
         </div>
         <div class="btn-group">
             <?php
+                $module_name = $this->module->id;
+                if(isset($this->module->options['audittrail']) 
+                        && $this->module->options['audittrail']){        
+                    Yii::import('audittrail.*');
+                    $this->widget('EFancyboxWidget',array(
+                        'selector'=>'a[href*=\'audittrail/show/fancybox\']',
+                        'options'=>array(
+                        ),
+                    ));        
+                    $this->widget("bootstrap.widgets.TbButton", array(
+                        "label"=>Yii::t("D2tasksModule.crud","Audit Trail"),
+                        'type'=>'info',
+                        "size"=>"large",
+                        "url"=>array(
+                            '/audittrail/show/fancybox',
+                            'model_name' => get_class($model),
+                            'model_id' => $model->getPrimaryKey(),
+                        ),
+                        "icon"=>"icon-info-sign",
+                    ));                        
+                }          
 //            $this->widget("bootstrap.widgets.TbButton", array(
 //                "label" => Yii::t("D2tasksModule.crud", "Delete"),
 //                "type" => "danger",

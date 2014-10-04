@@ -2,6 +2,7 @@
 
 class D2tasksModule extends CWebModule
 {
+    var $options = array();
 	public function init()
 	{
 		// this method is called when the module is being created

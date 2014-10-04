@@ -19,6 +19,7 @@
 return array (
   'Add Comment' => 'Pievienot komentāru',
   'Add new record' => 'Pievienot jaunu ierakstu',
+  'Audit Trail' => 'Audittpieraksti',
   'Back' => 'Atpakaļ',
   'Data' => '@@Dati@@',
   'Manage' => '@@Saraksts@@',
