@@ -23,8 +23,23 @@ public function accessRules()
      return array(
         array(
             'allow',
+            'actions' => array('create', ),
+            'roles' => array('D2tasks.TcmnCommunication.Create'),
+        ),
+        array(
+            'allow',
+            'actions' => array('editableSaver', ),
+            'roles' => array('D2tasks.TcmnCommunication.Update'),
+        ),
+        array(
+            'allow',
+            'actions' => array( 'admin', 'view',),
+            'roles' => array('D2tasks.TcmnCommunication.View'),
+        ),
+        array(
+            'allow',
             'actions' => array('create', 'admin', 'view',  'editableSaver', ),
-            'roles' => array('D2tasks.TcmnCommunication.edit'),
+            'roles' => array('D2tasks.TcmnCommunication.*'),
         ),
         array(
             'deny',

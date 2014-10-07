@@ -1,7 +1,9 @@
 <?php
+$can_edit = Yii::app()->user->checkAccess("D2tasks.TtskTask.Update") 
+        || Yii::app()->user->checkAccess("D2tasks.TtskTask.*") ;
+
 $this->setPageTitle(Yii::t('D2tasksModule.model', 'Project details') . ': ' . $model->getItemLabel());
 $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
-    #"label"=>Yii::t("D2tasksModule.crud","Cancel"),
     "icon" => "chevron-left",
     "size" => "large",
     "url" => (isset($_GET["returnUrl"])) ? $_GET["returnUrl"] : array("{$this->id}/admin"),
@@ -26,8 +28,10 @@ $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
         <div class="btn-group">
             <?php
                 $module_name = $this->module->id;
-                if(isset($this->module->options['audittrail']) 
-                        && $this->module->options['audittrail']){        
+                if(Yii::app()->user->checkAccess("audittrail") 
+                        && isset($this->module->options['audittrail']) 
+                        && $this->module->options['audittrail']
+                ){        
                     Yii::import('audittrail.*');
                     $this->widget('EFancyboxWidget',array(
                         'selector'=>'a[href*=\'audittrail/show/fancybox\']',
@@ -73,62 +77,66 @@ $this->widget(
     'data' => $model,
     'attributes' => array(
         array(
-            'name' => 'ttsk_ccmp_id',
+            'name' => 'ttsk_name',
             'type' => 'raw',
             'value' => $this->widget(
-                    'EditableField', array(
-                'model' => $model,
-                'type' => 'select',
-                'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
-                'source' => CHtml::listData(CcmpCompany::model()->findAll(array('limit' => 1000)), 'ccmp_id', 'itemLabel'),
-                'attribute' => 'ttsk_ccmp_id',
-                    //'placement' => 'right',
-                    ), true
-            ),
+                'EditableField', array(
+                    'model' => $model,
+                    'attribute' => 'ttsk_name',
+                    'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
+                    'apply' => $can_edit,                    
+                ), true
+            )
+        ),        
+        array(
+            'name' => 'ttsk_ccmp_id',
+            'type' => 'raw',
+            'value' => $can_edit?$this->widget(
+                'EditableField', array(
+                    'model' => $model,
+                    'type' => 'select',
+                    'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
+                    'source' => CHtml::listData(CcmpCompany::model()->findAll(array('limit' => 1000)), 'ccmp_id', 'itemLabel'),
+                    'attribute' => 'ttsk_ccmp_id',
+
+                ), true
+            ):$model->ttskCcmp->itemLabel,
             'value_id' => $model->ttsk_ccmp_id,
             'external_link' => array('/d2company/ccmpCompany/updateExtended','ccmp_id'=>$model->ttsk_ccmp_id),
             'external_title' => Yii::t("D2tasksModule.model",'Show Company Data'),                    
         ),
-        array(
-            'name' => 'ttsk_name',
-            'type' => 'raw',
-            'value' => $this->widget(
-                    'EditableField', array(
-                'model' => $model,
-                'attribute' => 'ttsk_name',
-                'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
-                    ), true
-            )
-        ),
+
         array(
             'name' => 'ttsk_description',
             'type' => 'raw',
             'value' => $this->widget(
-                    'EditableField', array(
-                'model' => $model,
-                'attribute' => 'ttsk_description',
-                'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
-                    ), true
-            )
+                'EditableField', array(
+                    'model' => $model,
+                    'attribute' => 'ttsk_description',
+                    'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
+                    'apply' => $can_edit,
+                ), true
+            ).' - '
         ),
         array(
             'name' => 'ttsk_tstt_id',
             'type' => 'raw',
-            'value' => $this->widget(
-                    'EditableField', 
-                    array(
-                        'model' => $model,
-                        'type' => 'select',
-                        'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
-                        'source' => CHtml::listData(TsttStatus::model()->findAll(array('limit' => 1000)), 'tstt_id', 'itemLabel'),
-                        'attribute' => 'ttsk_tstt_id',
-                        'success' => 'function(response, newValue) { 
-                                        $.fn.yiiGridView.update(\'tsth-status-history-grid\');
-                                      }',                        
-                    //'placement' => 'right',
-                    ), 
-                    true
-            )
+            'value' => $can_edit?$this->widget(
+                'EditableField', 
+                array(
+                    'model' => $model,
+                    'type' => 'select',
+                    'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
+                    'source' => CHtml::listData(TsttStatus::model()->findAll(array('limit' => 1000)), 'tstt_id', 'itemLabel'),
+                    'attribute' => 'ttsk_tstt_id',
+                    'success' => 'function(response, newValue) { 
+                                    $.fn.yiiGridView.update(\'tsth-status-history-grid\');
+                                  }',                        
+
+                //'placement' => 'right',
+                ), 
+                true
+            ):(!empty($model->ttsk_tstt_id)?$model->ttskTstt->itemLabel:'&nbsp;')
         ),
     ),
 ));
@@ -145,12 +153,10 @@ $this->renderPartial('_tsth_grid',array('model'=>$model));
 </div>
 
 <?php
- 
-Yii::app()->clientScript->registerCss('rel_grid',' 
-        .rel-grid-view div.summary {line-height: 0;}
-        ');     
-
-Yii::beginProfile('tcmn_ttsk_id.view.grid');
+if(Yii::app()->user->checkAccess("D2tasks.TcmtComments.View")){ 
+    Yii::app()->clientScript->registerCss('rel_grid',' 
+            .rel-grid-view div.summary {line-height: 0;}
+            ');     
 ?>
 
 <div class="table-header">
@@ -158,21 +164,23 @@ Yii::beginProfile('tcmn_ttsk_id.view.grid');
     <?=Yii::t('D2tasksModule.model', 'Tasks')?>
     <?php    
     //idejas: http://www.yiiframework.com/wiki/145/cjuidialog-for-create-new-model/    
-    $this->widget(
-        'bootstrap.widgets.TbButton',
-        array(
-            'id' => 'button_create_tcmn',
-            'buttonType' => 'link', 
-            'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-            'size' => 'mini',
-            'icon' => 'icon-plus',
-            'htmlOptions' => array(
-                'title' => Yii::t('D2tasksModule.crud', 'Add new record'),
-                'data-toggle' => 'tooltip',
-                'onclick'=>'js:{popupTcmnCreateForm(); $("#tcmn_create_form").dialog("open");}',
-            ),                 
-        )
-    );        
+    if(Yii::app()->user->checkAccess("D2tasks.TcmtComments.Create")){ 
+        $this->widget(
+            'bootstrap.widgets.TbButton',
+            array(
+                'id' => 'button_create_tcmn',
+                'buttonType' => 'link', 
+                'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                'size' => 'mini',
+                'icon' => 'icon-plus',
+                'htmlOptions' => array(
+                    'title' => Yii::t('D2tasksModule.crud', 'Add new record'),
+                    'data-toggle' => 'tooltip',
+                    'onclick'=>'js:{popupTcmnCreateForm(); $("#tcmn_create_form").dialog("open");}',
+                ),                 
+            )
+        );        
+    }
     ?>
 </div>
 <div class="row">
@@ -197,38 +205,49 @@ $this->beginWidget('vendor.uldisn.ace.widgets.CJuiAceDialog',array(
 ?><div id="tcmn_create_form_html"></div><?php
 $this->endWidget('vendor.uldisn.ace.widgets.CJuiAceDialog');    
 
-
-
-Yii::app()->clientScript->registerScript('tcmn_create_form_ajax', 
-   '
-       function popupTcmnCreateForm(){
-        ' .
-        CHtml::ajax(array(
-                    'url'=>array(
-                            '//d2tasks/tcmnCommunication/create',
-                    ),
-                    'data'=> "js:$(this).serialize()",
-                    'type'=>'post',
-                    'data'=>array(
-                        'ajax' => 'tcmn-communication-grid',
-                        'tcmn_ttsk_id'=>$model->primaryKey,
+    Yii::app()->clientScript->registerScript('tcmn_create_form_ajax', 
+       '
+           function popupTcmnCreateForm(){
+            ' .
+            CHtml::ajax(array(
+                        'url'=>array(
+                                '//d2tasks/tcmnCommunication/create',
                         ),
-                    'success'=>"function(data)
-                    {
-                        $('#tcmn_create_form_html').html(data);
-                    } ",
-                    ))        
-        . '         
-       }
+                        'data'=> "js:$(this).serialize()",
+                        'type'=>'post',
+                        'data'=>array(
+                            'ajax' => 'tcmn-communication-grid',
+                            'tcmn_ttsk_id'=>$model->primaryKey,
+                            ),
+                        'success'=>"function(data)
+                        {
+                            $('#tcmn_create_form_html').html(data);
+                        } ",
+                        ))        
+            . '         
+           }
 
-   ',
-   CClientScript::POS_END
-      
-);
+       ',
+       CClientScript::POS_END
+
+    );
+    Yii::beginProfile('TcmnCommunication.view.grid');
+    $this->renderPartial('_tcmn_grid',array('model'=>$model));
+    Yii::endProfile('TcmnCommunication.view.grid');
+    ?></div><?php
     
-$this->renderPartial('_tcmn_grid',array('model'=>$model));
-Yii::endProfile('TcmnCommunication.view.grid');
-
+}
 ?>
-</div>
-<?php echo $cancel_buton; ?>
+<?php 
+$cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
+    "icon" => "chevron-left",
+    "size" => "large",
+    "url" => (isset($_GET["returnUrl"])) ? $_GET["returnUrl"] : array("{$this->id}/admin"),
+    "visible" => (Yii::app()->user->checkAccess("D2tasks.TtskTask.*") || Yii::app()->user->checkAccess("D2tasks.TtskTask.View")),
+    "htmlOptions" => array(
+        "class" => "search-button",
+        "data-toggle" => "tooltip",
+        "title" => Yii::t("D2tasksModule.crud", "Back"),
+    )
+        ), true);
+echo $cancel_buton;

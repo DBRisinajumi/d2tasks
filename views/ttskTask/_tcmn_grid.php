@@ -1,4 +1,7 @@
 <?php
+    $can_edit = (boolean)Yii::app()->user->checkAccess("D2tasks.TcmnCommunication.Update");  
+    $bft = (!$can_edit)?'false':'true';
+    
     $tcmn_model = new TcmnCommunication();
     $tcmn_model->tcmn_ttsk_id = $model->primaryKey;
 
@@ -17,28 +20,25 @@
                 array(
                 'class' => 'editable.EditableColumn',
                 'name' => 'tcmn_pprs_id',
+                'value' => !$can_edit?'!empty($data->tcmn_pprs_id)?$data->tcmnPprs->itemLabel:" - "':'' ,   
                 'editable' => array(
                     'type' => 'select',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'source' => CHtml::listData(PprsPerson::model()->getSysCompanyPersons(), 'pprs_id', 'itemLabel'),
                     'placement' => 'right',
-                    'htmlOptions' => array(
-             //           'class' => 'span6'
-                    ),
-                )
+                    'apply' => $can_edit,
+                ),
             ),
             array(
                 'class' => 'editable.EditableColumn',
                 'name' => 'tcmn_client_pprs_id',
+                'value' => !$can_edit?'!empty($data->tcmn_client_pprs_id)?$data->tcmnClientPprs->itemLabel:" - "':'' ,                   
                 'editable' => array(
                     'type' => 'select',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'source' => CHtml::listData(PprsPerson::model()->getCompanyPersons($model->ttsk_ccmp_id), 'pprs_id', 'itemLabel'),
-                    'htmlOptions' => array(
-                //        'class' => 'span6'
-                    ),                    
-                    //'placement' => 'right',
-                )
+                    'apply' => $can_edit,                    
+                ),
             ),
             array(
                 'class' => 'editable.EditableColumn',
@@ -46,11 +46,8 @@
                 'editable' => array(
                     'type' => 'textarea',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
-                    'htmlOptions' => array(
-                //        'class' => 'span10'
-                    ),                                
-                    //'placement' => 'right',
-                )
+                    'apply' => $can_edit,     
+                ),    
             ),
             array(
                 'class' => 'editable.EditableColumn',
@@ -58,24 +55,19 @@
                 'editable' => array(
                     'type' => 'textarea',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
-                    'htmlOptions' => array(
-                 //       'class' => 'span10'
-                    ),                                       
-                    //'placement' => 'right',
-                )
+                    'apply' => $can_edit,                    
+                ),
             ),
             array(
                 'class' => 'editable.EditableColumn',
                 'name' => 'tcmn_tcst_id',
+                'value' => '!empty($data->tcmn_tcst_id)?$data->tcmnTcst->itemLabel:" - "' ,                   
                 'editable' => array(
                     'type' => 'select',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'source' => CHtml::listData(TcstCommunicationStatus::model()->findAll(), 'tcst_id', 'itemLabel'),
-                    'htmlOptions' => array(
-                 //       'class' => 'span3'
-                    ),                    
-                    //'placement' => 'right',
-                )
+                    'apply' => $can_edit,                    
+                ),
             ),
             array(
                 'class' => 'editable.EditableColumn',
@@ -83,33 +75,20 @@
                 'editable' => array(
                     'type'        => 'datetime',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
-                    'options' => array(
-//                        'datepicker' => array(
-//                            'language' => 'en',
-//                            ),
-                        
-                    ),
-                    
-
+                    'apply' => $can_edit,                    
                 ),
-                'htmlOptions' => array(
-              //          'class' => 'span5'
-                ),                    
-                
             ),
             array(
                 'class' => 'editable.EditableColumn',
                 'name' => 'tcmn_tmed_id',
+                'value' => '!empty($data->tcmn_tmed_id)?$data->tcmnTmed->itemLabel:" - "',
                 'type' => 'raw',
                 'editable' => array(
                     'type' => 'select',
                     'url' => $this->createUrl('//d2tasks/tcmnCommunication/editableSaver'),
                     'source' => CHtml::listData(TmedMedia::model()->findAll(array('limit' => 1000)), 'tmed_id', 'itemLabel'),
-                    'htmlOptions' => array(
-               //         'class' => 'span3'
-                    ),                    
-                    //'placement' => 'right',
-                )
+                    'apply' => $can_edit,
+                ),
             ),
 
 //                array(

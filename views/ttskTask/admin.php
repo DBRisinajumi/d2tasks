@@ -12,14 +12,16 @@ if (!$ajax) {
         <div class="btn-toolbar pull-left">
             <div class="btn-group">
                 <?php
-                $this->widget('bootstrap.widgets.TbButton', array(
-                    'label' => Yii::t('D2tasksModule.crud', 'Create'),
-                    'icon' => 'icon-plus',
-                    'size' => 'large',
-                    'type' => 'success',
-                    'url' => array('create'),
-                    'visible' => (Yii::app()->user->checkAccess('D2tasks.TtskTask.*') || Yii::app()->user->checkAccess('D2tasks.TtskTask.Create'))
-                ));
+                if(Yii::app()->user->checkAccess('D2tasks.TtskTask.Create')){
+                    $this->widget('bootstrap.widgets.TbButton', array(
+                        'label' => Yii::t('D2tasksModule.crud', 'Create'),
+                        'icon' => 'icon-plus',
+                        'size' => 'large',
+                        'type' => 'success',
+                        'url' => array('create'),
+                        'visible' => (Yii::app()->user->checkAccess('D2tasks.TtskTask.*') || Yii::app()->user->checkAccess('D2tasks.TtskTask.Create'))
+                    ));
+                }
                 ?>
             </div>
             <div class="btn-group">
@@ -91,9 +93,8 @@ $this->widget('TbGridView', array(
         array(
             'class' => 'TbButtonColumn',
             'buttons' => array(
-                'view' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTaskEdit")'),
+                'view' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTask.View")'),
                 'update' => array('visible' => 'FALSE'),
-                //'delete' => array('visible' => 'Yii::app()->user->checkAccess("D2tasks.TtskTask.Delete")'),
                 'delete' => array('visible' => 'FALSE'),
             ),
             'viewButtonUrl' => 'Yii::app()->controller->createUrl("view", array("ttsk_id" => $data->ttsk_id))',
