@@ -256,7 +256,7 @@ if((!$ajax || $ajax == 'tprs-persons-grid')
                     'buttons' => array(
                         'view' => array('visible' => 'FALSE'),
                         'update' => array('visible' => 'FALSE'),
-                        'delete' => array('visible' => 'TRUE")'),
+                        'delete' => array('visible' => 'TRUE'),
                     ),
                     'deleteButtonUrl' => 'Yii::app()->controller->createUrl("/d2tasks/tprsPersons/delete", array("tprs_id" => $data->tprs_id))',
                     'deleteConfirmation'=>Yii::t('D2tasksModule.crud','Do you want to delete this item?'),   
