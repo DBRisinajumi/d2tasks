@@ -56,7 +56,7 @@
                     'allowEmpty' => true,
                     'style' => 'dropdownlist',
                     'htmlOptions' => array(
-                        'checkAll' => 'all',
+                        //'checkAll' => 'all',
                         'class' => 'span11'
                         
                     ),
@@ -66,9 +66,30 @@
                             ?>                            </span>
                         </div>
                     </div>
-                    <?php  ?>
-                
-                 <?php  ?>
+
+                    <div class="control-group">
+                        <div class='control-label'>
+                            <?php echo $form->labelEx($model, 'ttsk_pprs_id') ?>
+                        </div>
+                        <div class='controls'>
+                            <span class="tooltip-wrapper" data-toggle='tooltip' data-placement="right"
+                                 title='<?php echo (($t = Yii::t('D2tasksModule.model', 'tooltip.ttsk_pprs_id')) != 'tooltip.ttsk_pprs_id')?$t:'' ?>'>
+                                <?php
+                            $pprs_listData = CHtml::listData(PprsPerson::model()->getSysCompanyPersons(), 'pprs_id', 'itemLabel');
+                            echo $form->listBox(
+                                    $model,
+                                    'ttsk_pprs_id',
+                                    $pprs_listData,
+                                    array(
+                                        'class' => 'span11'
+                                    )
+                            );
+                            //echo $form->error($model,'ttsk_pprs_id')
+                            ?>                            
+                            </span>
+                        </div>
+                    </div>                 
+
                     <div class="control-group">
                         <div class='control-label'>
                                 <?php echo Chtml::label('Managers', 'managers'); ?>

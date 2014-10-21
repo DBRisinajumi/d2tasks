@@ -52,6 +52,7 @@ class TtskTask extends BaseTtskTask
         return array_merge(
                 parent::rules(),
                 array(
+                    array('ttsk_ccmp_id,ttsk_pprs_id','PprsOrCcmpRequired',Yii::t('D2tasksModule.model', 'Company or person is required')),
                     array('ttsk_ccmp_id, ttsk_name, ttsk_description, ttsk_tstt_id, person_list,tcmn_date_range', 'safe', 'on' => 'search_ext'),
                 )    
         );
@@ -98,6 +99,14 @@ class TtskTask extends BaseTtskTask
         return new CActiveDataProvider(get_class($this), array(
             'criteria' => $this->searchCriteria($criteria),
         ));
+    }
+    
+    public function PprsOrCcmpRequired(){
+        if(empty($this->ttsk_ccmp_id) && empty($this->ttsk_pprs_id)){
+            return false;
+        }
+        
+        return true;
     }
     
     public function beforeSave() {

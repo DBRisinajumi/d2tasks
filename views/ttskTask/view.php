@@ -39,7 +39,6 @@ $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
                         ),
                     ));        
                     $this->widget("bootstrap.widgets.TbButton", array(
-                        "label"=>Yii::t("D2tasksModule.crud","Audit Trail"),
                         'type'=>'info',
                         "size"=>"large",
                         "url"=>array(
@@ -48,6 +47,11 @@ $cancel_buton = $this->widget("bootstrap.widgets.TbButton", array(
                             'model_id' => $model->getPrimaryKey(),
                         ),
                         "icon"=>"icon-info-sign",
+                        "htmlOptions" => array(
+                            "class" => "search-button",
+                            "data-toggle" => "tooltip",
+                            "title" => Yii::t("D2tasksModule.crud", "Audit Trail"),
+                        )
                     ));                        
                 }          
 //            $this->widget("bootstrap.widgets.TbButton", array(
@@ -104,6 +108,24 @@ $this->widget(
             'value_id' => $model->ttsk_ccmp_id,
             'external_link' => array('/d2company/ccmpCompany/updateExtended','ccmp_id'=>$model->ttsk_ccmp_id),
             'external_title' => Yii::t("D2tasksModule.model",'Show Company Data'),                    
+        ),
+
+        array(
+            'name' => 'ttsk_pprs_id',
+            'type' => 'raw',
+            'value' => $can_edit?$this->widget(
+                'EditableField', array(
+                    'model' => $model,
+                    'type' => 'select',
+                    'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
+                    'source' => CHtml::listData(PprsPerson::model()->getSysCompanyPersons(), 'pprs_id', 'itemLabel'),
+                    'attribute' => 'ttsk_pprs_id',
+
+                ), true
+            ):$model->ttskCcmp->itemLabel,
+            'value_id' => $model->ttsk_pprs_id,
+            'external_link' => array('/d2person/pprsPerson/view','pprs_id'=>$model->ttsk_pprs_id),
+            'external_title' => Yii::t("D2tasksModule.model",'Show Person Data'),                    
         ),
 
         array(

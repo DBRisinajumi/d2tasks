@@ -52,8 +52,14 @@ $this->widget('TbGridView', array(
         array(
             'header' => Yii::t('D2tasksModule.model', 'Client'),
             'name' => 'ttsk_ccmp_id',
-            'value' => '$data->ttskCcmp->ccmp_name',
+            'value' => '!empty($data->ttskCcmp)?$data->ttskCcmp->ccmp_name:""',
             'filter' => CHtml::listData(CcmpCompany::model()->findAll(array('order'=>'ccmp_name')), 'ccmp_id', 'itemLabel'),            
+        ),
+        array(
+            'header' => Yii::t('D2tasksModule.model', 'Persons'),
+            'name' => 'ttsk_pprs_id',
+            'value' => '!empty($data->ttskPprs)?$data->ttskPprs->itemLabel:""',
+            //'filter' => CHtml::listData(CcmpCompany::model()->findAll(array('order'=>'ccmp_name')), 'ccmp_id', 'itemLabel'),            
         ),
         array(
             'name' => 'ttsk_name',
@@ -64,7 +70,7 @@ $this->widget('TbGridView', array(
         array(
             //'class' => 'editable.EditableColumn',
             'name' => 'ttsk_tstt_id',
-            'value' => '$data->ttskTstt->itemLabel',
+            'value' => '!empty($data->ttskTstt)?$data->ttskTstt->itemLabel:""',
 //                'editable' => array(
 //                    'type' => 'select',
 //                    'url' => $this->createUrl('/d2tasks/ttskTask/editableSaver'),
