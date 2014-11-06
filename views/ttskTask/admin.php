@@ -52,7 +52,8 @@ $this->widget('TbGridView', array(
         array(
             'header' => Yii::t('D2tasksModule.model', 'Client'),
             'name' => 'ttsk_ccmp_id',
-            'value' => '!empty($data->ttskCcmp)?$data->ttskCcmp->ccmp_name:""',
+            //'value' => '!empty($data->ttskCcmp)?$data->ttskCcmp->ccmp_name:""',
+            'value' => '$data->ccmp_name',
             'filter' => CHtml::listData(CcmpCompany::model()->findAll(array('order'=>'ccmp_name')), 'ccmp_id', 'itemLabel'),            
         ),
         array(

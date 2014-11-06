@@ -11,6 +11,9 @@ class TtskTask extends BaseTtskTask
     public $person_list;
     public $tcmn_date_range;
     
+    public $ccmp_name;
+    
+    
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)
     {
@@ -91,6 +94,8 @@ class TtskTask extends BaseTtskTask
 
     }    
     
+    
+    
     public function search($criteria = null)
     {
         if (is_null($criteria)) {
@@ -133,5 +138,28 @@ class TtskTask extends BaseTtskTask
         }
         parent::afterSave();
     }
+    
+    protected function beforeFind() {
+
+        $criteria = new CDbCriteria;
+        $criteria->select .= ",ccmp_name ";
+        $criteria->join .= " inner join ccmp_company on ttsk_ccmp_id = ccmp_id ";
+        $criteria->compare('ccmp_sys_ccmp_id', Yii::app()->sysCompany->getActiveCompany());
+
+        $this->dbCriteria->mergeWith($criteria);
+
+        parent::beforeFind();
+    }
+
+    public function count($condition='',$params=array())
+    {
+        $criteria = new CDbCriteria;
+        $criteria->join .= " inner join ccmp_company on ttsk_ccmp_id = ccmp_id ";
+        $criteria->compare('ccmp_sys_ccmp_id', Yii::app()->sysCompany->getActiveCompany());
+
+        $criteria->mergeWith($condition);
+        
+        return parent::count($criteria,$params);
+    }    
     
 }

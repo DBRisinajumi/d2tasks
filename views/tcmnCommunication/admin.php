@@ -48,14 +48,15 @@ $this->widget('TbGridView',
         'columns' => array(
             array(
                 'header' => Yii::t('D2tasksModule.model', 'Client'),
-                'value' => '$data->tcmnTtsk->ttskCcmp->itemLabel',
+                //'value' => '$data->tcmnTtsk->ttskCcmp->itemLabel',
+                'value' => '$data->ccmp_name',
                 'name' => 'tcmn_ttsk_id',
                 'filter' => CHtml::listData(CcmpCompany::model()->findAll(array('order'=>'ccmp_name')), 'ccmp_id', 'itemLabel'),
             ),
             array(
                 'header' => Yii::t('D2tasksModule.model', 'Project'),
                 'name' => 'task_name',
-                'value' => '$data->tcmnTtsk->ttsk_name',
+                'value' => '$data->ttsk_name',
                 //'filter'=> CHtml::activeTextField($model, 'varFullname'),
             ),
             array(

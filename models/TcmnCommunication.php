@@ -10,6 +10,9 @@ class TcmnCommunication extends BaseTcmnCommunication
      public $task_name;
      public $tcmn_date_range;
 
+    public $ccmp_name;
+    public $ttsk_name;
+    
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)
     {
@@ -97,5 +100,31 @@ class TcmnCommunication extends BaseTcmnCommunication
             'criteria' => $this->searchCriteria($criteria),
         ));
     }
+    
+    
+    protected function beforeFind() {
 
+        $criteria = new CDbCriteria;
+        $criteria->select .= ',ccmp_name,ttsk_name';
+        $criteria->join .= " inner join ttsk_task on tcmn_ttsk_id = ttsk_id ";
+        $criteria->join .= " inner join ccmp_company on ttsk_ccmp_id = ccmp_id ";
+        $criteria->compare('ccmp_sys_ccmp_id', Yii::app()->sysCompany->getActiveCompany());
+
+        $this->dbCriteria->mergeWith($criteria);
+
+        parent::beforeFind();
+    }    
+
+    public function count($condition='',$params=array())
+    {
+        $criteria = new CDbCriteria;
+        $criteria->join .= " inner join ttsk_task on tcmn_ttsk_id = ttsk_id ";
+        $criteria->join .= " inner join ccmp_company on ttsk_ccmp_id = ccmp_id ";
+        $criteria->compare('ccmp_sys_ccmp_id', Yii::app()->sysCompany->getActiveCompany());
+
+        $criteria->mergeWith($condition);
+        
+        return parent::count($criteria,$params);
+    }       
+    
 }
